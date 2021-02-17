@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -12,49 +14,46 @@ namespace Business.Concrete
         IBrandDal _brandDal;
         public BrandManager(IBrandDal brandDal)
         {
-            _brandDal = brandDal;
+           _brandDal = brandDal;
         }
 
-        public void Add(Brand brand)
+        public IResult Add(Brand brand)
         {
-            if (brand.BrandName.Length >= 2)
+            if (brand.BrandName.Length < 2)
             {
-                _brandDal.Add(brand);
-                Console.WriteLine("Brand Successfully Added...");
+                return new ErrorResult(Messages.BrandErrorAdded);
             }
-            else
-            {
-                Console.WriteLine("The brand name entered must be at least two characters! The value you entered: " + brand.BrandName);
-            }
+
+            _brandDal.Add(brand);
+            return new SuccessResult(Messages.BrandSuccessAdded);
+
         }
 
-        public void Delete(Brand brand)
+        public IResult Delete(Brand brand)
         {
             _brandDal.Delete(brand);
-            Console.WriteLine("Brand Successfully Added...");
+            return new SuccessResult(Messages.BrandSuccessDeleted);
         }
 
-        public List<Brand> GetAll()
+        public IDataResult<List<Brand>> GetAll()
         {
-            return _brandDal.GetAll();
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(),Messages.BrandSuccessGetAll);
         }
 
-        public Brand GetByID(int ID)
+        public IDataResult<Brand> GetByID(int ID)
         {
-            return _brandDal.Get(b => b.ID == ID);
+            return new SuccessDataResult<Brand>(_brandDal.Get(b => b.ID == ID),Messages.BrandSuccessGetByID);
         }
 
-        public void Update(Brand brand)
+        public IResult Update(Brand brand)
         {
-            if (brand.BrandName.Length >= 2)
+            if (brand.BrandName.Length < 2)
             {
-                _brandDal.Update(brand);
-                Console.WriteLine("Brand Successfully Updated...");
+                return new ErrorResult(Messages.BrandErrorUpdated);
             }
-            else
-            {
-                Console.WriteLine("The brand name entered must be at least two characters! The length of value you entered: " + brand.BrandName.Length);
-            }
+
+            _brandDal.Update(brand);
+            return new SuccessResult(Messages.BrandSuccessUpdated);
         }
     }
 }

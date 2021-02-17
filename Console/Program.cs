@@ -11,80 +11,108 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
             CarManager carManager = new CarManager(new EfCarDal());
             ColorManager colorManager = new ColorManager(new EfColorDal());
-            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            UserManager userManager = new UserManager(new EfUserDal());
 
 
             //AddTest(brandManager);
             //AddTest(carManager);
             //AddTest(colorManager);
 
+            //DeleteTest(brandManager);
+            //DeleteTest(carManager);
+            //DeleteTest(colorManager);
+
+            //DtoTest(carManager);
+
             //GetAllTest(brandManager);
             //GetAllTest(colorManager);
             //GetAllTest(carManager);
+
+            //GetByDescriptionTest(carManager);
 
             //GetByIDTest(brandManager);
             //GetByIDTest(carManager);
             //GetByIDTest(colorManager);
 
-            //DeleteTest(brandManager);
-            //DeleteTest(carManager);
-            //DeleteTest(colorManager);
-
             //UpdateTest(brandManager);
             //UpdateTest(carManager);
             //UpdateTest(colorManager);
 
-            DtoTest(carManager);
-            
+
+            AddTest(rentalManager);
+
         }
 
-        private static void DtoTest(CarManager carManager)
+        private static void AddTest(RentalManager rentalManager)
         {
-            Console.WriteLine("\n\nAll Cars:\n\nCar Name\t\tBrand\t\tColor\t\tDaily Price");
-            foreach (var car in carManager.GetProductDetails())
-            {
-                Console.WriteLine($"{car.CarName}\t{car.BrandName}\t{car.ColorName}\t\t{car.DailyPrice}");
-            }
+            var result = rentalManager.Add(new Rental { ID = 1, CarID = 1, CustomerID = 1, RentDate = "16.02.2021", ReturnDate = "17.02.2021" });
+            Console.WriteLine(result.Message);
         }
 
         private static void AddTest(BrandManager brandManager)
         {
-            brandManager.Add(new Brand { ID = 4, BrandName = "BMW" });
+            var result = brandManager.Add(new Brand { ID = 4, BrandName = "BMW" });
+            Console.WriteLine(result.Message);
         }
 
         private static void AddTest(CarManager carManager)
         {
-            carManager.Add(new Car { ID = 37, BrandID = 3, ColorID = 3, DailyPrice = 100, ModelYear = 2019, Description = "Manual Shift" });
+            var result = carManager.Add(new Car { ID = 37, BrandID = 3, ColorID = 3, DailyPrice = 100, ModelYear = 2019,
+                                                  Description = "Manual Shift" });
+            Console.WriteLine(result.Message);
         }
 
         private static void AddTest(ColorManager colorManager)
         {
-            colorManager.Add(new Color { ID = 4, ColorName = "Blue" });
+            var result = colorManager.Add(new Color { ID = 4, ColorName = "Blue" });
+            Console.WriteLine(result.Message);
         }
         
 
         private static void DeleteTest(BrandManager brandManager)
         {
-            brandManager.Delete(new Brand { ID = 4 });
+            var result = brandManager.Delete(new Brand { ID = 4 });
+            Console.WriteLine(result.Message);
         }
 
         private static void DeleteTest(CarManager carManager)
         {
-            carManager.Delete(new Car { ID = 37 });
+            var result = carManager.Delete(new Car { ID = 37 });
+            Console.WriteLine(result.Message);
         }
 
         private static void DeleteTest(ColorManager colorManager)
         {
-            colorManager.Delete(new Color { ID = 4 });
+            var result = colorManager.Delete(new Color { ID = 4 });
+            Console.WriteLine(result.Message);
         }
 
+        private static void DtoTest(CarManager carManager)
+        {
+            var result = carManager.GetCarDetails();
+            Console.WriteLine(result.Message);
+            Console.WriteLine("\n\nAll Cars:\n\nCar Name\t\tBrand\t\tColor\t\tDaily Price");
+            if (result.Success)
+            {
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine($"{car.CarName}\t{car.BrandName}\t{car.ColorName}\t\t{car.DailyPrice}");
+                }
+            }
+
+        }
 
         private static void GetAllTest(BrandManager brandManager)
         {
+            var result = brandManager.GetAll();
+            Console.WriteLine(result.Message);
             Console.WriteLine("\n\nAll Brands: \n\nID\tBrand Name");
-            foreach (var brand in brandManager.GetAll())
+            foreach (var brand in result.Data)
             {
                 Console.WriteLine($"{brand.ID}\t{brand.BrandName}");
             }
@@ -92,8 +120,10 @@ namespace ConsoleUI
 
         private static void GetAllTest(CarManager carManager)
         {
+            var result = carManager.GetAll();
+            Console.WriteLine(result.Message);
             Console.WriteLine("\n\nAll Cars:\n\nId\tColor ID\tDescription\t\tModel Year\tBrand ID\tDaily Price");
-            foreach (var car in carManager.GetAll())
+            foreach (var car in result.Data)
             {
                 Console.WriteLine($"{car.ID}\t{car.ColorID}\t\t{car.Description}\t{car.ModelYear}\t\t{car.BrandID}\t\t{car.DailyPrice}");
             }
@@ -101,48 +131,85 @@ namespace ConsoleUI
 
         private static void GetAllTest(ColorManager colorManager)
         {
+            var result = colorManager.GetAll();
+            Console.WriteLine(result.Message);
             Console.WriteLine("\n\nAll Colors: \n\nID\tColor Name");
-            foreach (var color in colorManager.GetAll())
+            foreach (var color in result.Data)
             {
                 Console.WriteLine($"{color.ID}\t{color.ColorName}");
+            }
+        }
+        private static void GetByDescriptionTest(CarManager carManager)
+        {
+            var result = carManager.GetByDescription("Automatic Shift");
+            Console.WriteLine(result.Message);
+            if (result.Success)
+            {
+                Console.WriteLine("\n\nAll Cars:\n\nId\tColor ID\tDescription\t\tModel Year\tBrand ID\tDaily Price");
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine($"{car.ID}\t{car.ColorID}\t\t{car.Description}\t{car.ModelYear}\t\t{car.BrandID}\t\t{car.DailyPrice}");
+                }
             }
         }
 
         private static void GetByIDTest(BrandManager brandManager)
         {
-            Console.WriteLine("\n\nBrand that ID=3: \n\nID\tBrand Name");
-            Brand brand = brandManager.GetByID(3);
-            Console.WriteLine($"{brand.ID}\t{brand.BrandName}");
+            var result = brandManager.GetByID(3);
+            Console.WriteLine(result.Message);
+            if (result.Success)
+            {
+                Console.WriteLine("\n\nBrand that ID=3: \n\nID\tBrand Name");
+                var brand = result.Data;
+                Console.WriteLine($"{brand.ID}\t{brand.BrandName}");
+            }
+            
+            
+            
         }
 
         private static void GetByIDTest(CarManager carManager)
         {
-            Console.WriteLine("\n\nCar that ID=27:\n\nId\tColor ID\tDescription\t\tModel Year\tBrand ID\tDaily Price");
-            Car car = carManager.GetByID(27);
-            Console.WriteLine($"{car.ID}\t{car.ColorID}\t\t{car.Description}\t{car.ModelYear}\t\t{car.BrandID}\t\t{car.DailyPrice}");
+            var result = carManager.GetByID(27);
+            Console.WriteLine(result.Message);
+            if (result.Success)
+            {
+                Console.WriteLine("\n\nCar that ID=27:\n\nId\tColor ID\tDescription\t\tModel Year\tBrand ID\tDaily Price");
+                var car = result.Data;
+                Console.WriteLine($"{car.ID}\t{car.ColorID}\t\t{car.Description}\t{car.ModelYear}\t\t{car.BrandID}\t\t{car.DailyPrice}");
+            }
+            
         }
 
         private static void GetByIDTest(ColorManager colorManager)
         {
-            Console.WriteLine("\n\nColor that ID=4: \n\nID\tColor Name");
-            Color color = colorManager.GetByID(4);
-            Console.WriteLine($"{color.ID}\t{color.ColorName}");
+            var result = colorManager.GetByID(4);
+            Console.WriteLine(result.Message);
+            if (result.Success)
+            {
+                Console.WriteLine("\n\nColor that ID=4: \n\nID\tColor Name");
+                var color = result.Data;
+                Console.WriteLine($"{color.ID}\t{color.ColorName}");
+            }
         }
 
 
         private static void UpdateTest(BrandManager brandManager)
         {
-            brandManager.Update(new Brand { ID = 3, BrandName = "Renault" });
+            var result = brandManager.Update(new Brand { ID = 3, BrandName = "Renault" });
+            Console.WriteLine(result.Message);
         }
 
         private static void UpdateTest(CarManager carManager)
         {
-            carManager.Update(new Car { ID = 27, CarName="Volvo S60", BrandID = 3, ColorID = 1, Description = "Automatic Shift", ModelYear = 2021, DailyPrice = 1000 });
+            var result = carManager.Update(new Car { ID = 27, CarName="Volvo S60", BrandID = 3, ColorID = 1, Description = "Automatic Shift", ModelYear = 2021, DailyPrice = 1000 });
+            Console.WriteLine(result.Message);
         }
 
         private static void UpdateTest(ColorManager colorManager)
         {
-            colorManager.Update(new Color { ID = 3, ColorName = "Yellow" });
+            var result = colorManager.Update(new Color { ID = 3, ColorName = "Yellow" });
+            Console.WriteLine(result.Message);
         }
 
     }
