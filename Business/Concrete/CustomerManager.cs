@@ -42,7 +42,12 @@ namespace Business.Concrete
 
         public IDataResult<Customer> GetByID(int ID)
         {
-            return new SuccessDataResult<Customer>(_customerDal.Get(cu=>cu.UserID==ID),Messages.CustomerSuccessGetByID);
+            return new SuccessDataResult<Customer>(_customerDal.Get(cu=>cu.ID==ID),Messages.CustomerSuccessGetByID);
+        }
+
+        public IDataResult<Customer> GetByUserID(int ID)
+        {
+            return new SuccessDataResult<Customer>(_customerDal.Get(cu=> cu.UserID== ID),Messages.CustomerSuccessGetByID);
         }
 
         public IResult Update(Customer customer)

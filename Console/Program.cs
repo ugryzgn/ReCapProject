@@ -22,10 +22,16 @@ namespace ConsoleUI
             //AddTest(brandManager);
             //AddTest(carManager);
             //AddTest(colorManager);
+            //AddTest(customerManager);
+            //AddTest(rentalManager);
+            //AddTest(userManager);
 
             //DeleteTest(brandManager);
             //DeleteTest(carManager);
             //DeleteTest(colorManager);
+            //DeleteTest(customerManager);
+            //DeleteTest(rentalManager);
+            //DeleteTest(userManager);
 
             //DtoTest(carManager);
 
@@ -43,9 +49,39 @@ namespace ConsoleUI
             //UpdateTest(carManager);
             //UpdateTest(colorManager);
 
+            
 
-            AddTest(rentalManager);
 
+        }
+
+        private static void DeleteTest(UserManager userManager)
+        {
+            var result = userManager.Delete(new User { ID = 1});
+            Console.WriteLine(result.Message);
+        }
+
+        private static void DeleteTest(RentalManager rentalManager)
+        {
+            var result = rentalManager.Delete(new Rental { ID = 1 });
+            Console.WriteLine(result.Message);
+        }
+
+        private static void DeleteTest(CustomerManager customerManager)
+        {
+            var result = customerManager.Delete(new Customer { ID = 1 });
+            Console.WriteLine(result.Message);
+        }
+
+        private static void AddTest(UserManager userManager)
+        {
+            var result = userManager.Add(new User { ID = 1, FirstName = "Uğur", LastName = "Yazgan", Email = "ugryazgn@gmail.com", Password = "123456" });
+            Console.WriteLine(result.Message);
+        }
+
+        private static void AddTest(CustomerManager customerManager)
+        {
+            var result = customerManager.Add(new Customer { ID = 1, UserID = 1, CompanyName = "X" });
+            Console.WriteLine(result.Message);
         }
 
         private static void AddTest(RentalManager rentalManager)

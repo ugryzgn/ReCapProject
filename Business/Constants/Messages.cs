@@ -59,7 +59,7 @@ namespace Business.Constants
         public static string BrandErrorGetAll = "Brands could not be listed!";
         public static string CarErrorGetAll = "Cars could not be listed!";
         public static string ColorErrorGetAll = "Colors could not be listed! ";
-        public static string CustomersErrorGetAll = "Customers could not be listed!";
+        public static string CustomerErrorGetAll = "Customers could not be listed!";
         public static string RentalErrorGetAll = "Rentals could not be listed!";
         public static string UserErrorGetAll = "Users could not be listed! ";
 
