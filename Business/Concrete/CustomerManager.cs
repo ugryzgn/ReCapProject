@@ -30,6 +30,11 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CustomerSuccessDeleted);
         }
 
+        public IDataResult<Customer> GetByID(int ID)
+        {
+            return new SuccessDataResult<Customer>(_customerDal.Get(cu=>cu.ID==ID),Messages.CustomerSuccessGetByID);
+        }
+        
         public IDataResult<List<Customer>> GetAll()
         {
             return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(),Messages.CustomerSuccessGetAll);
@@ -39,12 +44,7 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(cu=>cu.CompanyName==companyName), Messages.CustomerSuccessGetBy);
         }
-
-        public IDataResult<Customer> GetByID(int ID)
-        {
-            return new SuccessDataResult<Customer>(_customerDal.Get(cu=>cu.ID==ID),Messages.CustomerSuccessGetByID);
-        }
-
+                
         public IDataResult<Customer> GetByUserID(int ID)
         {
             return new SuccessDataResult<Customer>(_customerDal.Get(cu=> cu.UserID== ID),Messages.CustomerSuccessGetByID);
