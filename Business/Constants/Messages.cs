@@ -8,6 +8,7 @@ namespace Business.Constants
     public static class Messages
     {
         public static string BrandSuccessAdded = "Brand successfully added...";
+        public static string CarImageSuccessAdded = "Car image successfully added...";
         public static string CarSuccessAdded = "Car successfully added...";
         public static string ColorSuccessAdded = "Color successfully added...";
         public static string CustomerSuccessAdded = "Customer successfully added...";
@@ -22,6 +23,7 @@ namespace Business.Constants
         public static string UserErrorAdded = "User could not be added! ";
 
         public static string BrandSuccessDeleted = "Brand successfully deleted...";
+        public static string CarImageSuccessDeleted = "Car image successfully deleted...";
         public static string CarSuccessDeleted = "Car successfully deleted...";
         public static string ColorSuccessDeleted = "Color successfully deleted...";
         public static string CustomerSuccessDeleted = "Customer successfully deleted...";
@@ -36,6 +38,7 @@ namespace Business.Constants
         public static string UserErrorDeleted = "User could not be deleted!";
 
         public static string BrandSuccessUpdated = "Brand successfully updated...";
+        public static string CarImageSuccessUpdated = "Car image successfully updated...";
         public static string CarSuccessUpdated = "Car successfully updated...";
         public static string ColorSuccessUpdated = "Color successfully updated...";
         public static string CustomerSuccessUpdated = "Customer successfully updated...";
@@ -104,7 +107,8 @@ namespace Business.Constants
         public static string CustomerErrorDto = "Customer details could not be listed!";
         public static string RentalErrorDto = "Rental details could not be listed!";
         public static string UserErrorDto = "User details could not be listed! ";
-
-
+        
+        public static string ImagesOfCarLimitExceeded = "You've exceeded the image limit! (One car can own most five images) ";
+        
     }
 }
