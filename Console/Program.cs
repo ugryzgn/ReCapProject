@@ -1,4 +1,5 @@
 using Business.Concrete;
+using Core.Entities.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
@@ -54,11 +55,11 @@ namespace ConsoleUI
 
         }
 
-        private static void DeleteTest(UserManager userManager)
-        {
-            var result = userManager.Delete(new User { ID = 1});
-            Console.WriteLine(result.Message);
-        }
+        //private static void DeleteTest(UserManager userManager)
+        //{
+        //    var result = userManager.Delete(new User { ID = 1});
+        //    Console.WriteLine(result.Message);
+        //}
 
         private static void DeleteTest(RentalManager rentalManager)
         {
@@ -72,11 +73,11 @@ namespace ConsoleUI
             Console.WriteLine(result.Message);
         }
 
-        private static void AddTest(UserManager userManager)
-        {
-            var result = userManager.Add(new User { ID = 1, FirstName = "Uğur", LastName = "Yazgan", Email = "ugryazgn@gmail.com", Password = "123456" });
-            Console.WriteLine(result.Message);
-        }
+        //private static void AddTest(UserManager userManager)
+        //{
+        //    var result = userManager.Add(new User { ID = 1, FirstName = "Uğur", LastName = "Yazgan", Email = "ugryazgn@gmail.com", Password = "123456" });
+        //    Console.WriteLine(result.Message);
+        //}
 
         private static void AddTest(CustomerManager customerManager)
         {

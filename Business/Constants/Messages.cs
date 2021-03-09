@@ -1,6 +1,8 @@
-﻿using Entities.Concrete;
+﻿using Core.Entities.Concrete;
+using Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Business.Constants
@@ -110,5 +112,14 @@ namespace Business.Constants
         
         public static string ImagesOfCarLimitExceeded = "You've exceeded the image limit! (One car can own most five images) ";
         
+        public static string AuthorizationDenied = "You are not authorized for this action!";
+
+        public static string UserRegistered = "User has been successfully registered...";
+        public static string UserNotFound = "User not found!";
+        public static string PasswordError = "Password is wrong!";
+        public static string SuccessfulLogin = "Login successful...";
+        public static string UserAlreadyExists = "This user already exists!";
+        public static string AccessTokenCreated = "Access token has been successfully created...";
+        public static string CarNameAlreadyExist = "There is already a car with the same name!";
     }
 }
