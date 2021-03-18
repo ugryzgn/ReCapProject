@@ -1,10 +1,12 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspect.Autofac.Caching;
 using Core.Aspect.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -61,6 +63,12 @@ namespace Business.Concrete
         public IDataResult<List<Rental>> GetByReturnDate(string returndate)
         {
             return new SuccessDataResult<List<Rental>>(_rentaldal.GetAll(r => r.ReturnDate == returndate), Messages.CustomerSuccessGetBy);
+        }
+
+        [CacheAspect]
+        public IDataResult<List<RentalDetailDto>> GetRentalDetails()
+        {
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentaldal.GetRentDetails(), Messages.RentalSuccessDto);
         }
 
         [ValidationAspect(typeof(RentalValidator))]
